@@ -31,6 +31,10 @@ fake.cvss3()
 Developing
 ----------
 
-Install `poetry` and run `poetry install`
+* Install `poetry` and run `poetry install`
+* Install `pre-commit` and run `pre-commit install --hooks`
+
+Testing
+-------
 
 `poetry run pytest` to run tests.
