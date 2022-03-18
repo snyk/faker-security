@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "faker-security"
+version = "0.1.0"
+description = "Faker provider for security related data"
+authors = ["Snyk Security R&D <security-engineering@snyk.io>"]
+license = "Apache-2.0"
+readme = "README.md"
+homepage = "https://github.com/snyk/faker-security"
+repository = "https://github.com/snyk/faker-security"
+keywords = ["faker"]
+include = ["LICENSE"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+faker = ">=8.2.1"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+mypy = "^0.931"
+pre-commit = "^2.17.0"
+pytest = "^6.2.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line_length = 99
+target_version = ["py39"]
+
+[tool.isort]
+line_length = 99
+profile = "black"
+
+[tool.coverage.report]
+exclude_lines = ["@abstract"]
