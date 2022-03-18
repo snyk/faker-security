@@ -27,3 +27,10 @@ fake.add_provider(SecurityProvider)
 # generate a CVSSv3 vector
 fake.cvss3()
 ```
+
+Developing
+----------
+
+Install `poetry` and run `poetry install`
+
+`poetry run pytest` to run tests.
