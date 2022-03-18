@@ -1,0 +1,4 @@
+flake8
+black==22.1.0
+isort
+yamllint

@@ -1,0 +1,59 @@
+---
+
+version: 2
+
+test: &test
+  steps:
+    - checkout
+    - run:
+        name: install python dependencies
+        command: pip install -r requirements.txt
+    - run:
+        name: install self
+        command: pip install .
+    - run:
+        name: run pytest
+        command: pytest
+
+
+jobs:
+  lint:
+    docker:
+      - image: "python:3.10"
+    steps:
+      - checkout
+      - run:
+          name: Install Lint Requirements
+          command: pip install -r lint-requirements.txt
+      - run:
+          name: flake8
+          command: |
+            pip install .
+            flake8 .
+      - run:
+          name: isort
+          command: isort . --diff -c
+      - run:
+          name: black
+          command: black . --check
+      - run:
+          name: yamllint
+          command: yamllint .
+
+  test-3.10:
+    docker:
+      - image: "python:3.10"
+    <<: *test
+
+  test-3.9:
+    docker:
+      - image: "python:3.9"
+    <<: *test
+
+workflows:
+  version: 2
+  spellcheck_test:
+    jobs:
+      - lint
+      - test-3.9
+      - test-3.10
