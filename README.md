@@ -1,21 +1,18 @@
-Faker-Security
-==============
+# Faker-Security
 
 Add on provider for [Faker](https://github.com/joke2k/faker)
 to generate random/fake data related to security.
 
-Requirements
-------------
+## Requirements
 
-* Faker
-* Python 3.9+
+- Faker
+- Python 3.9+
 
-Installation and Usage
-----------------------
+## Installation and Usage
 
-* Add `faker-security` to your requirements
-* Install `faker-security` using `pip` or whatever package manager you use
-* Add the `SecurityProvider` during tests or wherever you use Faker
+- Add `faker-security` to your requirements
+- Install `faker-security` using `pip` or whatever package manager you use
+- Add the `SecurityProvider` during tests or wherever you use Faker
 
 ```python
 from faker import Faker
@@ -28,13 +25,11 @@ fake.add_provider(SecurityProvider)
 fake.cvss3()
 ```
 
-Developing
-----------
+## Developing
 
-* Install `poetry` and run `poetry install`
-* Install `pre-commit` and run `pre-commit install --hooks`
+- Install `poetry` and run `poetry install`
+- Install `pre-commit` and run `pre-commit install --install-hooks`
 
-Testing
--------
+## Testing
 
 `poetry run pytest` to run tests.
