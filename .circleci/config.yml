@@ -83,7 +83,9 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - snyk/scan
+      - snyk/scan:
+          fail-on-issues: true
+          monitor-on-build: false
 
   build_and_release:
     description: Build and release new version of the package to PyPi
