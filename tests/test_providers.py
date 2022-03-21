@@ -28,9 +28,9 @@ class TestVersion:
         assert version.endswith(".8")
 
 
-class TestNpmSemver:
+class TestNpmSemverRange:
     def test_correct_default(self, faker):
-        semver = faker.npm_semver()
+        semver = faker.npm_semver_range()
         assert semver
 
 
