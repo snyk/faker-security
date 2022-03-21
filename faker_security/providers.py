@@ -20,7 +20,7 @@ class SecurityProvider(BaseProvider):
         patch = random.randint(*patch_range)
         return f"{major}.{minor}.{patch}"
 
-    def npm_semver(self):
+    def npm_semver_range(self):
         version = self.version()
         operator = random.choice(["=", "<", ">", "<=", ">="])
         return f"{operator}{version}"

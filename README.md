@@ -1,6 +1,6 @@
 # Faker-Security
 
-Add on provider for [Faker](https://github.com/joke2k/faker)
+Provider for [Faker](https://github.com/joke2k/faker)
 to generate random/fake data related to security.
 
 ## Requirements
@@ -24,6 +24,15 @@ fake.add_provider(SecurityProvider)
 # generate a CVSSv3 vector
 fake.cvss3()
 ```
+
+## Provider Features
+
+- `cvss3`: generates a CVSS v3 vector
+- `cvss2`: generates a CVSS v2 vector
+- `version`: generates a [semver version number](https://semver.org/)
+- `npm_semver_range`: generates a [npm compatible semver version range](https://docs.npmjs.com/about-semantic-versioning)
+- `cwe`: generates a CWE identifier
+- `cve`: generates a CVE identifier
 
 ## Developing
 
