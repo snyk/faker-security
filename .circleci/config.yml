@@ -1,5 +1,6 @@
 ---
 version: 2.1
+
 orbs:
   snyk: snyk/snyk@1.1.2
 
@@ -75,7 +76,8 @@ jobs:
   snyk_scan:
     description: Run with Snyk to check for vulnerability and license issues
     parameters:
-      type: executor
+      executor_name:
+        type: executor
     executor: << parameters.executor_name >>
     working_directory: ~/project
     steps:
