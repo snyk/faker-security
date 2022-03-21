@@ -72,7 +72,7 @@ jobs:
           name: Run tests
           command: poetry run pytest
 
-  snyk:
+  snyk_scan:
     description: Run with Snyk to check for vulnerability and license issues
     parameters:
       type: executor
@@ -118,7 +118,7 @@ workflows:
           name: Run Tests - python 3.9
           executor_name: python39
           context: snyk-security-rnd
-      - snyk:
+      - snyk_scan:
           name: Snyk Scan
           executor_name: python310
           context: snyk-security-rnd
