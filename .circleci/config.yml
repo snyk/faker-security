@@ -1,5 +1,8 @@
 ---
 version: 2.1
+orbs:
+  snyk: snyk/snyk@1.1.2
+
 parameters:
   poetry-version:
     type: string
@@ -69,6 +72,17 @@ jobs:
           name: Run tests
           command: poetry run pytest
 
+  snyk:
+    description: Run with Snyk to check for vulnerability and license issues
+    parameters:
+      type: executor
+    executor: << parameters.executor_name >>
+    working_directory: ~/project
+    steps:
+      - checkout:
+          path: ~/project
+      - snyk/scan
+
   build_and_release:
     description: Build and release new version of the package to PyPi
     executor: python310
@@ -103,6 +117,10 @@ workflows:
       - test:
           name: Run Tests - python 3.9
           executor_name: python39
+          context: snyk-security-rnd
+      - snyk:
+          name: Snyk Scan
+          executor_name: python310
           context: snyk-security-rnd
       - build_and_release:
           name: Build and Release a new version to PyPI
