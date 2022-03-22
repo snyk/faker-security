@@ -87,7 +87,7 @@ jobs:
           path: ~/project
       - snyk/scan:
           fail-on-issues: true
-          monitor-on-build: << parametrs.monitor_on_build >>
+          monitor-on-build: << parameters.monitor_on_build >>
 
   build_and_release:
     description: Build and release new version of the package to PyPi
