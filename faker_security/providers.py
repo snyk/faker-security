@@ -4,6 +4,7 @@ our factories.
 """
 
 import random
+from typing import Tuple
 
 from faker.providers import BaseProvider
 
@@ -11,9 +12,9 @@ from faker.providers import BaseProvider
 class SecurityProvider(BaseProvider):
     def version(
         self,
-        major_range: tuple[int, int] = (1, 10),
-        minor_range: tuple[int, int] = (1, 10),
-        patch_range: tuple[int, int] = (1, 10),
+        major_range: Tuple[int, int] = (1, 10),
+        minor_range: Tuple[int, int] = (1, 10),
+        patch_range: Tuple[int, int] = (1, 10),
     ):
         major = random.randint(*major_range)
         minor = random.randint(*minor_range)
@@ -25,11 +26,11 @@ class SecurityProvider(BaseProvider):
         operator = random.choice(["=", "<", ">", "<=", ">="])
         return f"{operator}{version}"
 
-    def cwe(self, range: tuple[int, int] = (1, 1000)):
+    def cwe(self, range: Tuple[int, int] = (1, 1000)):
         value = random.randint(*range)
         return f"CWE-{value}"
 
-    def cve(self, year_range: tuple[int, int] = (1990, 2024)):
+    def cve(self, year_range: Tuple[int, int] = (1990, 2024)):
         year = random.randint(*year_range)
         number = random.randint(1000, 9999)
         return f"CVE-{year}-{number}"
