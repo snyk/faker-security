@@ -78,6 +78,8 @@ jobs:
     parameters:
       executor_name:
         type: executor
+      monitor_on_build:
+        type: boolean
     executor: << parameters.executor_name >>
     working_directory: ~/project
     steps:
@@ -85,7 +87,7 @@ jobs:
           path: ~/project
       - snyk/scan:
           fail-on-issues: true
-          monitor-on-build: false
+          monitor-on-build: << parametrs.monitor_on_build >>
 
   build_and_release:
     description: Build and release new version of the package to PyPi
@@ -125,7 +127,19 @@ workflows:
       - snyk_scan:
           name: Snyk Scan
           executor_name: python310
+          monitor_on_build: false
           context: snyk-security-rnd
+          filters:
+            branches:
+              ignore: main
+      - snyk_scan:
+          name: Snyk Monitor
+          executor_name: python310
+          monitor_on_build: true
+          context: snyk-security-rnd
+          filters:
+            branches:
+              only: main
       - build_and_release:
           name: Build and Release a new version to PyPI
           requires:
