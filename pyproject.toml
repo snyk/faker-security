@@ -11,7 +11,7 @@ keywords = ["faker"]
 include = ["LICENSE"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 faker = ">=8.2.1"
 
 [tool.poetry.dev-dependencies]
@@ -28,7 +28,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line_length = 99
-target_version = ["py39"]
+target_version = ["py38"]
 
 [tool.isort]
 line_length = 99

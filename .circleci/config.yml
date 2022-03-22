@@ -19,6 +19,9 @@ executors:
   python39:
     docker:
       - image: "cimg/python:3.9"
+  python38:
+    docker:
+      - image: "cimg/python:3.8"
 
 jobs:
   lint:
@@ -124,6 +127,10 @@ workflows:
           name: Run Tests - python 3.9
           executor_name: python39
           context: snyk-security-rnd
+      - test:
+          name: Run Tests - python 3.8
+          executor_name: python38
+          context: snyk-security-rnd
       - snyk_scan:
           name: Snyk Scan
           executor_name: python310
@@ -145,6 +152,8 @@ workflows:
           requires:
             - Run Tests - python 3.10
             - Run Tests - python 3.9
+            - Run Tests - python 3.8
+            - Snyk Monitor
             - Run Linters
           filters:
             branches:
