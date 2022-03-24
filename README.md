@@ -6,7 +6,7 @@ to generate random/fake data related to security.
 ## Requirements
 
 - Faker
-- Python 3.9+
+- Python 3.8+
 
 ## Installation and Usage
 
