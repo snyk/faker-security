@@ -132,14 +132,6 @@ workflows:
           executor_name: python38
           context: snyk-security-rnd
       - snyk_scan:
-          name: Snyk Scan
-          executor_name: python310
-          monitor_on_build: false
-          context: snyk-security-rnd
-          filters:
-            branches:
-              ignore: main
-      - snyk_scan:
           name: Snyk Monitor
           executor_name: python310
           monitor_on_build: true
