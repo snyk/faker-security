@@ -1,5 +1,7 @@
 # Faker-Security
 
+[![Pypi](https://badge.fury.io/py/faker-security.svg)](https://pypi.org/project/faker-security/)
+
 Provider for [Faker](https://github.com/joke2k/faker)
 to generate random/fake data related to security.
 
