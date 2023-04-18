@@ -1,3 +1,6 @@
+import re
+
+
 class TestVersion:
     def test_correct_default(self, faker):
         version = faker.version()
@@ -26,6 +29,23 @@ class TestVersion:
     def test_specific_patch(self, faker):
         version = faker.version(patch_range=(8, 8))
         assert version.endswith(".8")
+
+
+class TestSnykId:
+    pattern = r"^SNYK-[A-Z]+-[A-Z0-9]+-\d+$"
+
+    def test_correct_default(self, faker):
+        snyk_id = faker.snyk_id()
+        assert re.match(self.pattern, snyk_id)
+
+    def test_suffix_range(self, faker):
+        snyk_id = faker.snyk_id(suffix_range=(1030, 8000))
+        assert re.match(self.pattern, snyk_id)
+
+    def test_specific_suffix(self, faker):
+        snyk_id = faker.snyk_id(suffix_range=(80, 80))
+        assert re.match(self.pattern, snyk_id)
+        assert snyk_id.endswith("-80")
 
 
 class TestNpmSemverRange:

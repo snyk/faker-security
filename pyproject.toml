@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "faker-security"
-version = "0.2.0"
+version = "0.3.0"
 description = "Faker provider for security related data"
 authors = ["Snyk Security R&D <security-engineering@snyk.io>"]
 license = "Apache-2.0"
