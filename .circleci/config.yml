@@ -153,14 +153,14 @@ workflows:
             branches:
               only: main
 
-release:
-  jobs:
-    - build_and_release:
-        name: Build and Release a new version to PyPI
-        filters:
-          # ignore any commit on any branch by default
-          branches:
-            ignore: /.*/
-          # Only run when a semver is tagged
-          tags:
-            only: /^\d+\.\d+\.\d+$/
+  release:
+    jobs:
+      - build_and_release:
+          name: Build and Release a new version to PyPI
+          filters:
+            # ignore any commit on any branch by default
+            branches:
+              ignore: /.*/
+            # Only run when a semver is tagged
+            tags:
+              only: /^\d+\.\d+\.\d+$/
