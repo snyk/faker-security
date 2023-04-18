@@ -6,7 +6,10 @@ our factories.
 import random
 from typing import Tuple
 
+from faker import Faker
 from faker.providers import BaseProvider
+
+fake = Faker()
 
 
 class SecurityProvider(BaseProvider):
@@ -20,6 +23,12 @@ class SecurityProvider(BaseProvider):
         minor = random.randint(*minor_range)
         patch = random.randint(*patch_range)
         return f"{major}.{minor}.{patch}"
+
+    def snyk_id(self, suffix_range: Tuple[int, int] = (1000, 90000)):
+        ecosystem = random.choice(["python", "java", "ruby", "dotnet"]).upper()
+        slug = fake.slug().replace("-", "").upper()
+        suffix = random.randint(*suffix_range)
+        return f"SNYK-{ecosystem}-{slug}-{suffix}"
 
     def npm_semver_range(self):
         version = self.version()
