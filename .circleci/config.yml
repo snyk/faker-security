@@ -108,7 +108,9 @@ jobs:
           path: ~/project
       - run:
           name: Install Poetry
-          command: poetry self update <<pipeline.parameters.poetry-version>>
+          command: >
+            curl -sSL https://install.python-poetry.org
+            | POETRY_VERSION=<<pipeline.parameters.poetry-version>> python3 -
       - run:
           name: Configure Poetry PyPi token
           command: |
@@ -150,14 +152,11 @@ workflows:
           filters:
             branches:
               only: main
+
+release:
+  jobs:
       - build_and_release:
           name: Build and Release a new version to PyPI
-          requires:
-            - Run Tests - python 3.10
-            - Run Tests - python 3.9
-            - Run Tests - python 3.8
-            - Snyk Monitor
-            - Run Linters
           filters:
             # ignore any commit on any branch by default
             branches:
