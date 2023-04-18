@@ -6,8 +6,10 @@ orbs:
 
 parameters:
   poetry-version:
+    # pinned due to poetry issues on circleci
+    # https://github.com/python-poetry/poetry/issues/7184#
     type: string
-    default: "1.1.13"
+    default: "1.2.2"
 
 executors:
   linters:
@@ -68,7 +70,9 @@ jobs:
           path: ~/project
       - run:
           name: Install Poetry
-          command: poetry self update <<pipeline.parameters.poetry-version>>
+          command: >
+            curl -sSL https://install.python-poetry.org
+            | POETRY_VERSION=<<pipeline.parameters.poetry-version>> python3 -
       - run:
           name: Install dependencies and project in dev mode
           command: poetry install
