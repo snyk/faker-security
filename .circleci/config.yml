@@ -1,9 +1,6 @@
 ---
 version: 2.1
 
-orbs:
-  snyk: snyk/snyk@1.1.2
-
 parameters:
   poetry-version:
     # pinned due to poetry issues on circleci
@@ -83,22 +80,6 @@ jobs:
           name: Run tests
           command: poetry run pytest
 
-  snyk_scan:
-    description: Run with Snyk to check for vulnerability and license issues
-    parameters:
-      executor_name:
-        type: executor
-      monitor_on_build:
-        type: boolean
-    executor: << parameters.executor_name >>
-    working_directory: ~/project
-    steps:
-      - checkout:
-          path: ~/project
-      - snyk/scan:
-          fail-on-issues: true
-          monitor-on-build: << parameters.monitor_on_build >>
-
   build_and_release:
     description: Build and release new version of the package to PyPi
     executor: python310
@@ -144,14 +125,6 @@ workflows:
           name: Run Tests - python 3.8
           executor_name: python38
           context: snyk-security-rnd
-      - snyk_scan:
-          name: Snyk Monitor
-          executor_name: python310
-          monitor_on_build: true
-          context: snyk-security-rnd
-          filters:
-            branches:
-              only: main
 
   release:
     jobs:
