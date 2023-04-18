@@ -15,6 +15,9 @@ executors:
   linters:
     docker:
       - image: "python:3.10-alpine"
+  python311:
+    docker:
+      - image: "cimg/python:3.11"
   python310:
     docker:
       - image: "cimg/python:3.10"
@@ -122,6 +125,10 @@ workflows:
       - lint:
           name: Run Linters
           executor_name: linters
+          context: snyk-security-rnd
+      - test:
+          name: Run Tests - python 3.11
+          executor_name: python311
           context: snyk-security-rnd
       - test:
           name: Run Tests - python 3.10
