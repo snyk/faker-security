@@ -1,6 +1,9 @@
 ---
 version: 2.1
 
+orbs:
+  prodsec: snyk/prodsec-orb@1.0
+
 parameters:
   poetry-version:
     # pinned due to poetry issues on circleci
@@ -125,7 +128,11 @@ workflows:
           name: Run Tests - python 3.8
           executor_name: python38
           context: snyk-security-rnd
-
+      - prodsec/secrets-scan:
+          name: Scan repository for secrets
+          context:
+            - snyk-bot-slack
+          channel: sec-eng-deployments
   release:
     jobs:
       - build_and_release:
