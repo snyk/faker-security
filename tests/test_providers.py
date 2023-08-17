@@ -88,3 +88,9 @@ class TestCVSSv2:
     def test_correct_default(self, faker):
         cvssv2 = faker.cvss2()
         assert cvssv2
+
+
+class TestCCSS:
+    def test_correct_default(self, faker):
+        ccss = faker.ccss()
+        assert ccss
