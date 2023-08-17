@@ -106,7 +106,7 @@ class SecurityProvider(BaseProvider):
         privilege_level = random.choice(["R", "U", "A", "ND"])
         exploitation_method = random.choice("AP")
 
-        result = "/".join(
+        return "/".join(
             [
                 f"AV:{access_vector}",
                 f"AC:{access_complexity}",
@@ -118,5 +118,3 @@ class SecurityProvider(BaseProvider):
                 f"EM:{exploitation_method}",
             ]
         )
-
-        return f"{result}"
