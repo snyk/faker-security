@@ -91,3 +91,32 @@ class SecurityProvider(BaseProvider):
         )
 
         return f"({result})"
+
+    def ccss(self):
+        # values obtained from:
+        # https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7502.pdf
+
+        # base metric scores
+        access_vector = random.choice("LAN")
+        access_complexity = random.choice("HML")
+        authentication = random.choice("MSN")
+        confidentiality = random.choice("NPC")
+        integrity_impact = random.choice("NPC")
+        availability_impact = random.choice("NPC")
+        privilege_level = random.choice(["R", "U", "A", "ND"])
+        exploitation_method = random.choice("AP")
+
+        result = "/".join(
+            [
+                f"AV:{access_vector}",
+                f"AC:{access_complexity}",
+                f"Au:{authentication}",
+                f"C:{confidentiality}",
+                f"I:{integrity_impact}",
+                f"A:{availability_impact}",
+                f"PL:{privilege_level}",
+                f"EM:{exploitation_method}",
+            ]
+        )
+
+        return f"{result}"
