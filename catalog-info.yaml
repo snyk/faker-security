@@ -1,0 +1,9 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: faker-security
+spec:
+  type: external-library
+  lifecycle: "-"
+  owner: rocket
