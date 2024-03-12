@@ -32,6 +32,7 @@ fake.cvss3()
 
 ## Provider Features
 
+- `cvss4`: generates a CVSS v4 vector
 - `cvss3`: generates a CVSS v3 vector
 - `cvss2`: generates a CVSS v2 vector
 - `ccss`: generates a CCSS vector
