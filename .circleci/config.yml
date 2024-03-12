@@ -130,6 +130,7 @@ workflows:
           context: snyk-security-rnd
       - prodsec/secrets-scan:
           name: Scan repository for secrets
+          trusted-branch: main
           context:
             - snyk-bot-slack
           channel: sec-eng-deployments

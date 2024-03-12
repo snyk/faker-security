@@ -78,6 +78,12 @@ class TestCve:
         assert cve.startswith("CVE-2013-")
 
 
+class TestCVSSv4:
+    def test_correct_default(self, faker):
+        cvssv4 = faker.cvss4()
+        assert cvssv4
+
+
 class TestCVSSv3:
     def test_correct_default(self, faker):
         cvssv3 = faker.cvss3()

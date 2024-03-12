@@ -44,6 +44,35 @@ class SecurityProvider(BaseProvider):
         number = random.randint(1000, 9999)
         return f"CVE-{year}-{number}"
 
+    def cvss4(self):
+        # values obtained from:
+        # https://www.first.org/cvss/calculator/4.0
+        attack_vector = random.choice("NALP")
+        attack_complexity = random.choice("LH")
+        attack_requirements = random.choice("NP")
+        priviliges_required = random.choice("NLH")
+        user_interaction = random.choice("NPA")
+        confidentiality_vulnerable_system = random.choice("NLH")
+        integrity_vulnerable_system = random.choice("NLH")
+        availability_vulnerable_system = random.choice("NLH")
+        confidentiality_subsequent_system = random.choice("NLH")
+        integrity_subsequent_system = random.choice("NLH")
+        availability_subsequent_system = random.choice("NLH")
+        return (
+            "CVSS:4.0/"
+            f"AV:{attack_vector}/"
+            f"AC:{attack_complexity}/"
+            f"AT:{attack_requirements}/"
+            f"PR:{priviliges_required}/"
+            f"UI:{user_interaction}/"
+            f"VC:{confidentiality_vulnerable_system}/"
+            f"VI:{integrity_vulnerable_system}/"
+            f"VA:{availability_vulnerable_system}/"
+            f"SC:{confidentiality_subsequent_system}/"
+            f"SI:{integrity_subsequent_system}/"
+            f"SA:{availability_subsequent_system}"
+        )
+
     def cvss3(self):
         # values obtained from:
         # https://www.first.org/cvss/calculator/3.1
