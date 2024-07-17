@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  prodsec: snyk/prodsec-orb@1.0
+  prodsec: snyk/prodsec-orb@1
 
 parameters:
   poetry-version:
@@ -28,7 +28,21 @@ executors:
     docker:
       - image: "cimg/python:3.8"
 
+defaults_python: &defaults_python
+  resource_class: small
+  docker:
+    - image: cimg/python:3.12.1
+
 jobs:
+  security-scans:
+    <<: *defaults_python
+    steps:
+      - checkout
+      - run:
+          name: Run pip install
+          command: pip install -r standards-generator/requirements.txt
+      - prodsec/security_scans:
+          mode: auto
   lint:
     parameters:
       executor_name:
@@ -134,6 +148,10 @@ workflows:
           context:
             - snyk-bot-slack
           channel: sec-eng-deployments
+      - security-scans:
+          name: Snyk Security Scans
+          context: 
+            - analysis_security_intelligence
   release:
     jobs:
       - build_and_release:
