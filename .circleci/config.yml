@@ -34,15 +34,6 @@ defaults_python: &defaults_python
     - image: cimg/python:3.12.1
 
 jobs:
-  security-scans:
-    <<: *defaults_python
-    steps:
-      - checkout
-      - run:
-          name: Run pip install
-          command: pip install -r standards-generator/requirements.txt
-      - prodsec/security_scans:
-          mode: auto
   lint:
     parameters:
       executor_name:
@@ -96,7 +87,12 @@ jobs:
       - run:
           name: Run tests
           command: poetry run pytest
-
+  security-scans:
+    <<: *defaults_python
+    steps:
+      - checkout
+      - prodsec/security_scans:
+          mode: gate
   build_and_release:
     description: Build and release new version of the package to PyPi
     executor: python310
@@ -152,6 +148,8 @@ workflows:
           name: Snyk Security Scans
           context: 
             - analysis_security_intelligence
+          requires:
+            - Run Linters
   release:
     jobs:
       - build_and_release:
