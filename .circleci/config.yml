@@ -11,6 +11,11 @@ parameters:
     type: string
     default: "1.2.2"
 
+defaults_python: &defaults_python
+  resource_class: small
+  docker:
+    - image: "cimg/python:3.10"
+
 executors:
   linters:
     docker:
@@ -28,12 +33,21 @@ executors:
     docker:
       - image: "cimg/python:3.8"
 
-defaults_python: &defaults_python
-  resource_class: small
-  docker:
-    - image: cimg/python:3.12.1
-
 jobs:
+  security-scans:
+    <<: *defaults_python
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Install Poetry
+          command: >
+            pipx install poetry==<<pipeline.parameters.poetry-version>>
+      - run:
+          name: Install dependencies and project in dev mode
+          command: poetry install
+      - prodsec/security_scans:
+          mode: auto
   lint:
     parameters:
       executor_name:
@@ -87,12 +101,7 @@ jobs:
       - run:
           name: Run tests
           command: poetry run pytest
-  security-scans:
-    <<: *defaults_python
-    steps:
-      - checkout
-      - prodsec/security_scans:
-          mode: gate
+
   build_and_release:
     description: Build and release new version of the package to PyPi
     executor: python310
@@ -145,11 +154,10 @@ workflows:
             - snyk-bot-slack
           channel: sec-eng-deployments
       - security-scans:
-          name: Snyk Security Scans
-          context: 
+          name: Security Scans
+          context:
             - analysis_security_intelligence
-          requires:
-            - Run Linters
+            - snyk-security-rnd
   release:
     jobs:
       - build_and_release:
