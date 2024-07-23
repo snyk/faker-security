@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  prodsec: snyk/prodsec-orb@1.0
+  prodsec: snyk/prodsec-orb@1
 
 parameters:
   poetry-version:
@@ -10,6 +10,11 @@ parameters:
     # https://github.com/python-poetry/poetry/issues/7184#
     type: string
     default: "1.2.2"
+
+defaults_python: &defaults_python
+  resource_class: small
+  docker:
+    - image: "cimg/python:3.10"
 
 executors:
   linters:
@@ -29,6 +34,21 @@ executors:
       - image: "cimg/python:3.8"
 
 jobs:
+  security-scans:
+    <<: *defaults_python
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Install Poetry
+          command: >
+            pipx install poetry==<<pipeline.parameters.poetry-version>>
+      - run:
+          name: Install dependencies and project in dev mode
+          command: poetry install
+      - prodsec/security_scans:
+          mode: auto
+          iac-scan: disabled
   lint:
     parameters:
       executor_name:
@@ -108,6 +128,20 @@ workflows:
   version: 2
   test:
     jobs:
+      - prodsec/secrets-scan:
+          name: Scan repository for secrets
+          trusted-branch: main
+          context:
+            - snyk-bot-slack
+          channel: sec-eng-deployments
+          filters:
+            branches:
+              ignore:
+                - main
+      - security-scans:
+          name: Security Scans
+          context:
+            - analysis_security_intelligence
       - lint:
           name: Run Linters
           executor_name: linters
@@ -128,12 +162,6 @@ workflows:
           name: Run Tests - python 3.8
           executor_name: python38
           context: snyk-security-rnd
-      - prodsec/secrets-scan:
-          name: Scan repository for secrets
-          trusted-branch: main
-          context:
-            - snyk-bot-slack
-          channel: sec-eng-deployments
   release:
     jobs:
       - build_and_release:

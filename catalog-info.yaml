@@ -6,4 +6,4 @@ metadata:
 spec:
   type: external-library
   lifecycle: "-"
-  owner: rocket
+  owner: security-intelligence
