@@ -48,6 +48,7 @@ jobs:
           command: poetry install
       - prodsec/security_scans:
           mode: auto
+          iac-scan: disabled
   lint:
     parameters:
       executor_name:
@@ -127,6 +128,20 @@ workflows:
   version: 2
   test:
     jobs:
+      - prodsec/secrets-scan:
+          name: Scan repository for secrets
+          trusted-branch: main
+          context:
+            - snyk-bot-slack
+          channel: sec-eng-deployments
+          filters:
+            branches:
+              ignore:
+                - main
+      - security-scans:
+          name: Security Scans
+          context:
+            - analysis_security_intelligence
       - lint:
           name: Run Linters
           executor_name: linters
@@ -147,17 +162,6 @@ workflows:
           name: Run Tests - python 3.8
           executor_name: python38
           context: snyk-security-rnd
-      - prodsec/secrets-scan:
-          name: Scan repository for secrets
-          trusted-branch: main
-          context:
-            - snyk-bot-slack
-          channel: sec-eng-deployments
-      - security-scans:
-          name: Security Scans
-          context:
-            - analysis_security_intelligence
-            - snyk-security-rnd
   release:
     jobs:
       - build_and_release:
