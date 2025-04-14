@@ -133,7 +133,7 @@ workflows:
           trusted-branch: main
           context:
             - snyk-bot-slack
-          channel: sec-eng-deployments
+          channel: snyk-vuln-alerts-security-intelligence
           filters:
             branches:
               ignore:
