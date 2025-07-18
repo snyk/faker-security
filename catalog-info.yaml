@@ -6,4 +6,4 @@ metadata:
 spec:
   type: external-library
   lifecycle: "-"
-  owner: security-intelligence
+  owner: intelligence-engineering

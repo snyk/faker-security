@@ -133,7 +133,7 @@ workflows:
           trusted-branch: main
           context:
             - snyk-bot-slack
-          channel: sec-eng-deployments
+          channel: snyk-vuln-alerts-intelligence-engineering
           filters:
             branches:
               ignore:
@@ -141,7 +141,7 @@ workflows:
       - security-scans:
           name: Security Scans
           context:
-            - analysis_security_intelligence
+            - codesec_intelligence-engineering
       - lint:
           name: Run Linters
           executor_name: linters
