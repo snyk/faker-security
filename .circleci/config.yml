@@ -133,6 +133,7 @@ workflows:
           trusted-branch: main
           context:
             - snyk-bot-slack
+            - prodsec-orb-runtime
           channel: snyk-vuln-alerts-intelligence-engineering
           filters:
             branches:
@@ -142,6 +143,7 @@ workflows:
           name: Security Scans
           context:
             - codesec_intelligence-engineering
+            - prodsec-orb-runtime
       - lint:
           name: Run Linters
           executor_name: linters
